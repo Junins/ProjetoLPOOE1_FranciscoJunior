@@ -1,13 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
+ */
 
-import br.edu.ifsul.cc.lpoo.sistemacompeticaoesportiva.projetolpooe1_franciscojunior.dao.PersistenciaJPA;
-import java.util.Arrays;
-import java.util.Date;
-import model.Funcionario;
-import model.Projeto;
-import model.Tarefa;
+import br.edu.ifsul.cc.lpoo.estacionamentoifsul.lpoo_sistemaestacionamentoifsul.dao.PersistenciaJPA;
+import model.EntradaSaida;
+import model.Marca;
+import model.Modelo;
+import model.Pessoa;
+import model.TipoMovimentacao;
+import model.TipoVeiculo;
+import model.VeiOficial;
+import model.Veiculo;
+import model.VinculoPessoa;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class TestePersistencia {
     PersistenciaJPA jpa = new PersistenciaJPA();
@@ -24,52 +33,41 @@ public class TestePersistencia {
     public void tearDown() {
         jpa.fecharConexao();
     }
-    
-        @Test
-        public void testePersistencia2() {
-        Projeto p = new Projeto();
-        p.setNome("Desenvolvimento de Sistema");
-        p.setDescricao("Desenvolver sistema de gerenciamento de tarefas");
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    @Test
+    public void testePersistencia() {
+        Modelo m = new Modelo();
+        m.setDescricao("fox");
+        m.setMarca(Marca.FORD);
         
-        Funcionario f1 = new Funcionario();
-        f1.setNome("João");
-        f1.setCargo("Dev");
+        Veiculo t = new Veiculo();
+        t.setModelo(m);
+        t.setCor("PRATA");
+        t.setPlaca("ABC4T67");
+        t.setTipoVeiculo(TipoVeiculo.CARRO);
         
-        Funcionario f2 = new Funcionario();
-        f2.setNome("Maria");
-        f2.setCargo("Analista de Sistmas");
+        EntradaSaida es = new EntradaSaida(TipoMovimentacao.SAIDA, t);
         
-        //associando funcionarios ao projeto
-        p.setFuncionarios(Arrays.asList(f1,f2));
+        Pessoa p = new Pessoa();
+        p.setNome("Juka");
+        p.setVinculoPessoa(VinculoPessoa.VISITANTE);
         
-        Tarefa t1 = new Tarefa();
-            t1.setDescricao("Desenvolvimento de Backend");
-            t1.setDataInicio(new Date());
-            t1.setDataFim(new Date());
-            t1.setProjeto(p);
-            t1.setFuncionario(f1);
+        t.setProprietario(p);
         
-        
-        Tarefa t2 = new Tarefa();
-            t2.setDescricao("Análise de Requisitos");
-            t2.setDataInicio(new Date());
-            t2.setDataFim(new Date());
-            t2.setProjeto(p);
-            t2.setFuncionario(f2);
-                  
-            //persistir objetos
         try{
-            jpa.persist(f1);
-            jpa.persist(f2);
-            jpa.persist(p);
-            jpa.persist(t1);
-            jpa.persist(t2);
+            jpa.persist(m);
+            jpa.persist(t);
+            jpa.persist(es); 
+            jpa.persist(p); 
             
+            jpa.remover(p);
             
         } catch(Exception e){
-            System.err.println("Erro ao persistir modelo");
+            System.err.println("Erro ao persistir modelo: "+m);
         }
-
-    
-}
+        
+    }
 }
