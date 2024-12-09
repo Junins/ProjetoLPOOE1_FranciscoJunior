@@ -4,6 +4,6 @@ Avaliação da disciplina de LPOO - Linguagem de Programação Orientada a Objet
 
 ## Modelagem
 
-A modelagem do sistema incluiu as seguintes entidades e seus relacionamentos:
+A modelagem do sistema incluiu as entidades e seus relacionamentos:
 
 ![diagrama](img/diagrama.png)
